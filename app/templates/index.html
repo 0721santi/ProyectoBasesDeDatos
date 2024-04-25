@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./styles/index.css" rel="stylesheet" type="text/css">
-    <script src="./scripts/index.js"></script>
+    <link href="{% static 'styles/index.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'scripts/index.js' %}"></script>
     <title>GUI - CRUD</title>
 </head>
 <body class="bodyConfig">
