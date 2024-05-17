@@ -93,14 +93,6 @@ function opcDesplegable(){
                             <input type="text" id="totalValor" name="totalValor"/>
                         </div>
                         <div class="elemento">
-                            <label for="medioPago">Medio de Pago</label><br>
-                            <input type="text" id="medioPago" name="medioPago"/>
-                        </div>
-                        <div class="elemento">
-                            <label for="totalProductos">Total Productos</label><br>
-                            <input type="text" id="totalProductos" name="totalProductos"/>
-                        </div>
-                        <div class="elemento">
                             <label for="FyH">Fecha y Hora</label><br>
                             <input type="datetime-local" id="FyH" name="FyH"/>
                         </div>
