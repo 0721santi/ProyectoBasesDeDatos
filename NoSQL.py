@@ -3,17 +3,17 @@ from dotenv import load_dotenv
 import os
 
 class NoSQL():
-    def init(self):
+    def __init__(self):
         load_dotenv()
-        self.pwd = os.getenv('DB_PASS')
-        
-    def DBConn(self):
-        # uri = f"mongodb+srv://mgarciac10:{self.pwd}@cluster0.oxxzmnb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-        uri = f"mongodb+srv://sidarragac:{self.pwd}@cluster0.t58ekeo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-        client = MongoClient(uri)
+        pwd = os.getenv('DB_PASS')
+        uri = f"mongodb+srv://sidarragac:{pwd}@cluster0.t58ekeo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+        # uri = f"mongodb+srv://mgarciac10:{pwd}@cluster0.oxxzmnb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+        self.client = MongoClient(uri)
         try:
-            client.admin.command('ping')
-            print("DONE!")
-            return client
+            self.client.admin.command('ping')
+            self.db = self.client.sample_mflix
         except Exception as e:
-            print(e)
+            print(f'Exception: {e}')
+    
+    def closeConn(self):
+        self.client.close()
