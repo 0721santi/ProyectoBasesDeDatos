@@ -17,3 +17,75 @@ class NoSQL():
     
     def closeConn(self):
         self.client.close()
+
+    def createCliente(self):
+        pass
+
+    def createRestaurante(self):
+        pass
+
+    def createFactura(self):
+        pass
+
+    def createInventario(self):
+        pass
+
+    def createProducto(self):
+        pass
+
+    def createProveedor(self):
+        pass
+
+    def updateCliente(self):
+        pass
+
+    def updateRestaurante(self):
+        pass
+
+    def updateFactura(self):
+        pass
+
+    def updateInventario(self):
+        pass
+
+    def updateProducto(self):
+        pass
+
+    def updateProveedor(self):
+        pass
+
+    def retrieveCliente(self):
+        pass
+
+    def retrieveRestaurante(self):
+        pass
+
+    def retrieveFactura(self):
+        pass
+    
+    def retrieveInventario(self):
+        pass
+
+    def retrieveProducto(self):
+        pass
+
+    def retrieveProveedor(self):
+        pass
+
+    def deleteCliente(self):
+        pass
+
+    def deleteRestaurante(self):
+        pass
+
+    def deleteFactura(self):
+        pass
+
+    def deleteInventario(self):
+        pass
+
+    def deleteProducto(self):
+        pass
+
+    def deleteProveedor(self):
+        pass
