@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./static/styles/index.css" rel="stylesheet" type="text/css">
-    <script src="./static/scripts/index.js"></script>
-    <title>GUI - CRUD</title>
+    <link href="../static/styles/index.css" rel="stylesheet" type="text/css">
+    <title>GUI - Create</title>
 </head>
 <body class="bodyConfig">
-    <div class="info">
-        <h1>
-            GUI - Entrega 1 - Bases de datos
-        </h1>
-        <div class="selectButtons">
-            <button onclick="redirectCreate()">CREATE</button>
-            <button onclick="redirectRetrieve()">RETRIEVE</button>
-            <button onclick="redirectUpdate()">UPDATE</button>
-            <button onclick="redirectDelete()">DELETE</button>
-        </div>
-    </div>
+    <h1>GUI - Bases de datos</h1>
+    <form action="/table" method="GET">
+        <select name="tabla" id="tabla">
+            <option>Seleccione una tabla</option>
+            <option value="cliente">Cliente</option>
+            <option value="restaurante">Restaurante</option>
+            <option value="factura">Factura</option>
+            <option value="producto">Producto</option>
+            <option value="proveedor">Proveedor</option>
+            <option value="inventario">Inventario</option>
+        </select>
+        <br>
+        <input type="submit" value="Submit">
+    </form>    
 </body>
 </html>

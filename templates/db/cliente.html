@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/form.css" rel="stylesheet" type="text/css">
+    <title>Coleccion Cliente</title>
+</head>
+<body class="bodyConfig">
+    <div class="infoRellenar">
+        <h1 style="margin-bottom: 20px;">Información Cliente</h1>
+        <div class="selectedOpc" id="selectedOpc">
+            <form action="/cliente" method="POST">
+                <div class="elemento">
+                    <label for="id">ID</label><br>
+                    <input type="number" id="id" name="id"/>
+                </div>
+                <div class="elemento">
+                    <label for="nombre">Nombre</label><br>
+                    <input type="text" id="nombre" name="nombre">
+                </div>
+                <div class="elemento">
+                    <label for="mail">Email</label><br>
+                    <input type="email" id="mail" name="mail"/>
+                </div>
+                <div class="elemento">
+                    <label for="telefono">Teléfono</label><br>
+                    <input type="number" id="telefono" name="telefono">
+                </div>
+                <div class="elemento">
+                    <input type="submit" value="Create" id="opc" name="opc"/>
+                    <input type="submit" value="Retrieve" id="opc" name="opc"/>
+                    <input type="submit" value="Update" id="opc" name="opc"/>
+                    <input type="submit" value="Delete" id="opc" name="opc"/>
+                </div>
+            </form>
+            <div class="elemento">
+                <form action='/'>
+                    <input type="submit" value="Regresar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

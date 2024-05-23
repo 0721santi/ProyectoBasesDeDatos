@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/form.css" rel="stylesheet" type="text/css">
+    <title>Coleccion Restaurante</title>
+</head>
+<body class="bodyConfig">
+    <div class="infoRellenar">
+        <h1 style="margin-bottom: 20px;">Información Restaurante</h1>
+        <div class="selectedOpc" id="selectedOpc">
+            <form action="/restaurante" method="POST">
+                <div class="elemento">
+                    <label for="nit">NIT</label><br>
+                    <input type="number" id="nit" name="nit"/>
+                </div>
+                <div class="elemento">
+                    <label for="nombre">Nombre</label><br>
+                    <input type="text" id="nombre" name="nombre">
+                </div>
+                <div class="elemento">
+                    <label for="apertura">Hora Apertura</label><br>
+                    <input type="time" id="apertura" name="apertura"/>
+                </div>
+                <div class="elemento">
+                    <label for="cierre">Hora Cerrado</label><br>
+                    <input type="time" id="cierre" name="cierre"/>
+                </div>
+                <div class="elemento">
+                    <label for="ubicacion">Ubicación</label><br>
+                    <input type="text" id="ubicacion" name="ubicacion"/>
+                </div>
+                <div class="elemento">
+                    <input type="submit" value="Create" id="opc" name="opc"/>
+                    <input type="submit" value="Retrieve" id="opc" name="opc"/>
+                    <input type="submit" value="Update" id="opc" name="opc"/>
+                    <input type="submit" value="Delete" id="opc" name="opc"/>
+                </div>
+            </form>
+            <div class="elemento">
+                <form action='/'>
+                    <input type="submit" value="Regresar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

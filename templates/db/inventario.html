@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/form.css" rel="stylesheet" type="text/css">
+    <title>Coleccion Inventario</title>
+</head>
+<body class="bodyConfig">
+    <div class="infoRellenar">
+        <h1 style="margin-bottom: 20px;">Inventario</h1>
+        <div class="selectedOpc" id="selectedOpc">
+            <form action="/inventario" method="POST">
+                <div class="elemento">
+                    <label for="nitRest">NIT Restaurante</label><br>
+                    <input type="number" id="nitRest" name="nitRest"/>
+                </div>
+                <div class="elemento">
+                    <label for="codProd">Codigo Producto</label><br>
+                    <input type="number" id="codProd" name="codProd"/>
+                </div>
+                <div class="elemento">
+                    <label for="cantidad">Cantidad Producto</label><br>
+                    <input type="number" id="cantidad" name="cantidad"/>
+                </div>
+                <div class="elemento">
+                    <input type="submit" value="Create" id="opc" name="opc"/>
+                    <input type="submit" value="Retrieve" id="opc" name="opc"/>
+                    <input type="submit" value="Update" id="opc" name="opc"/>
+                    <input type="submit" value="Delete" id="opc" name="opc"/>
+                </div>
+            </form>
+            <div class="elemento">
+                <form action='/'>
+                    <input type="submit" value="Regresar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

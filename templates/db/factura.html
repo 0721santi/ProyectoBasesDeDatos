@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/form.css" rel="stylesheet" type="text/css">
+    <title>Coleccion Factura</title>
+</head>
+<body class="bodyConfig">
+    <div class="infoRellenar">
+        <h1 style="margin-bottom: 20px;">Información Factura</h1>
+        <div class="selectedOpc" id="selectedOpc">
+            <form action="/factura" method="POST">
+                <div class="elemento">
+                    <label for="nit">NIT Restaurante</label><br>
+                    <input type="text" id="nit" name="nit"/>
+                </div>
+                <div class="elemento">
+                    <label for="id">ID Cliente</label><br>
+                    <input type="number" id="id" name="id"/>
+                </div>
+                <div class="elemento">
+                    <label for="totalProductos">Total Productos</label><br>
+                    <input type="number" id="totalProductos" name="totalProductos"/>
+                </div>
+                <div class="elemento">
+                    <label for="medioPago">Medio de Pago</label><br>
+                    <input type="text" id="medioPago" name="medioPago"/>
+                </div>
+                <div class="elemento">
+                    <label for="FyH">Fecha y Hora</label><br>
+                    <input type="datetime-local" id="FyH" name="FyH"/>
+                </div>
+                <div class="elemento">
+                    <input type="submit" value="Create" id="opc" name="opc"/>
+                    <input type="submit" value="Retrieve" id="opc" name="opc"/>
+                    <input type="submit" value="Update" id="opc" name="opc"/>
+                    <input type="submit" value="Delete" id="opc" name="opc"/>
+                </div>
+            </form>
+            <div class="elemento">
+                <form action='/'>
+                    <input type="submit" value="Regresar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

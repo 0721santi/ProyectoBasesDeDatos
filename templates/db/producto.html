@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/form.css" rel="stylesheet" type="text/css">
+    <title>Coleccion Producto</title>
+</head>
+<body class="bodyConfig">
+    <div class="infoRellenar">
+        <h1 style="margin-bottom: 20px;">Información Producto</h1>
+        <div class="selectedOpc" id="selectedOpc">
+            <form action="/producto" method="POST">
+                <div class="elemento">
+                    <label for="nitProv">NIT Proveedor</label><br>
+                    <input type="number" id="nitProv" name="nitProv"/>
+                </div>
+                <div class="elemento">
+                    <label for="nombre">Nombre Producto</label><br>
+                    <input type="text" id="nombre" name="nombre"/>
+                </div>
+                <div class="elemento">
+                    <label for="precio">Precio Producto</label><br>
+                    <input type="number" id="precio" name="precio"/>
+                </div>
+                <div class="elemento">
+                    <label for="categoria">Categoría Producto</label><br>
+                    <input type="text" id="categoria" name="categoria"/>
+                </div>
+                <div class="elemento">
+                    <input type="submit" value="Create" id="opc" name="opc"/>
+                    <input type="submit" value="Retrieve" id="opc" name="opc"/>
+                    <input type="submit" value="Update" id="opc" name="opc"/>
+                    <input type="submit" value="Delete" id="opc" name="opc"/>
+                </div>
+            </form>
+            <div class="elemento">
+                <form action='/'>
+                    <input type="submit" value="Regresar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

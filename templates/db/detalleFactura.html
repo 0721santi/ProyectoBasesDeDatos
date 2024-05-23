@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/form.css" rel="stylesheet" type="text/css">
+    <title>Detalle Factura</title>
+</head>
+<body class="bodyConfig">
+    <div class="infoRellenar">
+        <h1 style="margin-bottom: 20px;">Detalle Factura</h1>
+        <h1> Producto #{{currProd}} de {{prods}} </h1>
+        <div class="selectedOpc" id="selectedOpc">
+            <form action="/detalleFactura", method="POST">
+                <input type="hidden" name="nit" id="nit" value="{{ nit }}">
+                <input type="hidden" name="id" id="id" value="{{ id }}">
+                <input type="hidden" name="prods" id="prods" value="{{ prods }}">
+                <input type="hidden" name="medioPago" id="medioPago" value="{{ medioPago }}">
+                <input type="hidden" name="fechaCompra" id="fechaCompra" value="{{ fechaCompra }}">
+                <input type="hidden" name="currProd" id="currProd" value="{{ currProd }}">
+                <div class="elemento">
+                    <label for="prod">Código Producto</label><br>
+                    <input type="text" id="prod" name="prod" required="true"/>
+                </div>
+                <div class="elemento">
+                    <label for="cantidad">Cantidad Comprada</label><br>
+                    <input type="number" id="cantidad" name="cantidad" required="true"/>
+                </div>
+                <div class="elemento">
+                    <input type="submit" value="Enviar"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
