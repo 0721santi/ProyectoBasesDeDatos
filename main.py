@@ -162,6 +162,7 @@ def actionsInventario():
 
 @app.route("/producto", methods=["POST"])
 def actionsProducto():
+    idProd = request.form['idProd']
     nitProv = int(request.form['nitProv'])
     nombre = request.form['nombre']
     precio = int(request.form['precio'])
@@ -184,7 +185,7 @@ def actionsProducto():
         else:
             msg = "No se pudo eliminar el dato. Llamar admin."
     elif opc == "Update":
-        ans = db.updateProducto()
+        ans = db.updateProducto(idProd, nitProv, nombre, precio, categoria)
         if ans:
             msg = "Se actualizó el dato"
         else:
@@ -223,7 +224,7 @@ def actionsProveedor():
         else:
             msg = "No se pudo eliminar el dato. Llamar admin."
     elif opc == "Update":
-        ans = db.updateProveedor()
+        ans = db.updateProveedor(nitProv, ubicacion, telefono)
         if ans:
             msg = "Se actualizó el dato"
         else:
