@@ -1,4 +1,5 @@
 from pymongo.mongo_client import MongoClient
+from pymongo.bulk import ObjectId
 from dotenv import load_dotenv
 import os
 
@@ -26,7 +27,6 @@ class NoSQL():
         except Exception as e:
             print(e)
             return False
-
 
     def createRestaurante(self, nit, nombre, apertura, cierre, ubicacion):
         colection = self.db.restaurante
@@ -139,11 +139,50 @@ class NoSQL():
                 print(e)
                 return False
 
-    def updateProducto(self, nitProv, nombre, precio, categoria):
-        pass
+    def updateProducto(self, idProd, nitProv, nombre, precio, categoria):
+        colection = self.db.producto
+        objID = ObjectId(idProd)
+        print(objID)
+        pk = {"$and": [{'_id': objID}, {'proveedor_nitProveedor': nitProv}]}        
+        if precio > 0:
+            change = {'$set': {'precio': precio}}
+            try:
+                colection.update_one(filter=pk, update=change)
+            except Exception as e:
+                print(e)
+                return False
+        if len(nombre) > 0:
+            change = {'$set': {'nombreProducto': nombre}}
+            try:
+                colection.update_one(filter=pk, update=change)
+            except Exception as e:
+                print(e)
+        if len(categoria) > 0:
+            change = {'$set': {'categoria': categoria}}
+            try:
+                colection.update_one(filter=pk, update=change)
+            except Exception as e:
+                print(e)
+        return True
 
-    def updateProveedor(self):
-        pass
+    def updateProveedor(self, nitProv, ubicacion, telefono):
+        colection = self.db.proveedor
+        pk = {'nitProveedor': nitProv}
+        if len(ubicacion) > 0:
+            change = {'$set': {'ubicacionProveedor': ubicacion}}
+            try:
+                colection.update_one(filter=pk, update=change)
+            except Exception as e:
+                print(e)
+                return False
+        if len(str(telefono)) > 0:
+            change = {'$set': {'telefono': telefono}}
+            try:
+                colection.update_one(filter=pk, update=change)
+            except Exception as e:
+                print(e)
+                return False
+        return True
 
     def retrieveCliente(self):
         pass
