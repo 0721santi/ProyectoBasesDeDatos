@@ -18,6 +18,11 @@
                 <input type="hidden" name="medioPago" id="medioPago" value="{{ medioPago }}">
                 <input type="hidden" name="fechaCompra" id="fechaCompra" value="{{ fechaCompra }}">
                 <input type="hidden" name="currProd" id="currProd" value="{{ currProd }}">
+                {% for row in productos %}
+                    {% for value in row %}
+                        <input type="hidden" name="productosArr".format(loop.index) value="{{ value }}">
+                    {% endfor %}
+                {% endfor %}
                 <div class="elemento">
                     <label for="prod">Código Producto</label><br>
                     <input type="text" id="prod" name="prod" required="true"/>
