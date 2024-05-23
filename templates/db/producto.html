@@ -12,6 +12,10 @@
         <div class="selectedOpc" id="selectedOpc">
             <form action="/producto" method="POST">
                 <div class="elemento">
+                    <label for="idProd">ID Producto</label><br>
+                    <input type="text" id="idProd" name="idProd"/>
+                </div>
+                <div class="elemento">
                     <label for="nitProv">NIT Proveedor</label><br>
                     <input type="number" id="nitProv" name="nitProv"/>
                 </div>
@@ -21,7 +25,7 @@
                 </div>
                 <div class="elemento">
                     <label for="precio">Precio Producto</label><br>
-                    <input type="number" id="precio" name="precio"/>
+                    <input type="number" id="precio" name="precio" value="0"/>
                 </div>
                 <div class="elemento">
                     <label for="categoria">Categoría Producto</label><br>
