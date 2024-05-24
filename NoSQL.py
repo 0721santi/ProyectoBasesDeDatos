@@ -23,20 +23,22 @@ class NoSQL():
         doc = {"idCliente": id, "nombreCliente": nombre, "correoCliente": mail, "telefonoCliente": telefono}
         try:
             colection.insert_one(doc)
-            return True
+            return "Se ha creado el cliente"
         except Exception as e:
-            print(e)
-            return False
+            return str(e)
 
     def createRestaurante(self, nit, nombre, apertura, cierre, ubicacion):
         colection = self.db.restaurante
+        ubicacion = ubicacion.lower() 
+        ubicacion = ubicacion.capitalize()
+        if ubicacion != "Cafeteria principal" and ubicacion != "Cafeteria norte":
+            return "La ubicacion del restaurante es inválida"
         doc = {"nitRestaurante": nit, "nombreRestaurante": nombre, "ubicacionRestaurante": ubicacion, "horaApertura": apertura, "horaCierre": cierre}
         try:
             colection.insert_one(doc)
-            return True
+            return "Se ha creado el restaurante"
         except Exception as e:
-            print(e)
-            return False
+            return str(e)
 
     def createFactura(self, productos, id, nit, medioPago, fechaCompra, totalProductos):
         with self.client.start_session() as transaccion:
@@ -75,7 +77,7 @@ class NoSQL():
 
                 idFactura = factura.insert_one(doc).inserted_id
 
-                #Añandir detalle Factura
+                #Añadir detalle Factura
                 for info in productos:
                     producto = info[0]
                     cantidad = info[1]
@@ -83,10 +85,10 @@ class NoSQL():
                     detalleFactura.insert_one(doc)
                 
                 transaccion.commit_transaction()
-                return True, "Se ha agregado la factura"
+                return "Se ha agregado la factura"
             except Exception as e :
                 transaccion.abort_transaction()
-                return False, str(e)
+                return str(e)
 
     def createInventario(self, nitRest, codProd, cantidad):
         try:
@@ -100,29 +102,27 @@ class NoSQL():
             doc = {"restaurante_nitRestaurante": nitRest, "producto_codigoProducto": codProd, "cantidadDisponible":     cantidad}
 
             colection.insert_one(doc)
-            return True, "Se ha agregado el inventario"
+            return "Se ha agregado el inventario"
         except Exception as e:
-            return False, str(e)
+            return str(e)
 
     def createProducto(self, nitProv, nombre, precio, categoria):
         colection = self.db.producto
         doc = {"nombreProducto": nombre, "precio": precio, "categoria": categoria, "proveedor_nitProveedor": nitProv}
         try:
             colection.insert_one(doc)
-            return True
+            return "Se ha creado el producto"
         except Exception as e:
-            print(e)
-            return False
+            return str(e)
 
     def createProveedor(self, nitProv, ubicacion, telefono):
         colection = self.db.proveedor
         doc = {"nitProveedor": nitProv, "ubicacionProveedor": ubicacion, "telefonoProveedor": telefono}
         try:
             colection.insert_one(doc)
-            return True
+            return "Se ha creado el proveedor"
         except Exception as e:
-            print(e)
-            return False
+            return str(e)
 
     def updateCliente(self, id, nombre, mail, telefono):
         colection = self.db.cliente
@@ -132,22 +132,20 @@ class NoSQL():
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
         if len(mail) > 0:
             change = {'$set': {'correoCliente': mail}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
         if len(str(telefono)) > 1:
             change = {'$set': {'telefonoCliente': telefono}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-        return True
+                return str(e)
+        return f"El cliente con id {id} ha sido actualizado"
 
     def updateRestaurante(self, nit, nombre, apertura, cierre, ubicacion):
         colection = self.db.restaurante
@@ -157,28 +155,30 @@ class NoSQL():
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
         if len(str(apertura)) > 0:
             change = {'$set': {'horaApertura': apertura}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
         if len(str(cierre)) > 0:
             change = {'$set': {'horaCierre': cierre}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
+                return str(e)
         if len(ubicacion) > 0:
+            ubicacion = ubicacion.lower() 
+            ubicacion = ubicacion.capitalize()
+            if ubicacion != "Cafeteria principal" and ubicacion != "Cafeteria norte":
+                return "La ubicacion del restaurante es inválida"
             change = {'$set': {'ubicacionRestaurante': ubicacion}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-        return True
+               return str(e)
+        return f"Se ha actualizado el restaurante con NIT {nit}"
 
     def updateInventario(self, nitRest, codProd, cantidad):
         colection = self.db.inventario
@@ -187,10 +187,8 @@ class NoSQL():
             change = {'$set': {'cantidadDisponible': cantidad}}
             try:
                 colection.update_one(filter=pk, update=change)
-                return True
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
 
     def updateProducto(self, idProd, nitProv, nombre, precio, categoria):
         colection = self.db.producto
@@ -202,21 +200,20 @@ class NoSQL():
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
         if len(nombre) > 0:
             change = {'$set': {'nombreProducto': nombre}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
+                return str(e)
         if len(categoria) > 0:
             change = {'$set': {'categoria': categoria}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-        return True
+                return str(e)
+        return f"El producto {nombre} ha sido actualizado"
 
     def updateProveedor(self, nitProv, ubicacion, telefono):
         colection = self.db.proveedor
@@ -226,34 +223,90 @@ class NoSQL():
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
+                return str(e)
         if len(str(telefono)) > 0:
             change = {'$set': {'telefono': telefono}}
             try:
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
-                print(e)
-                return False
-        return True
+                return str(e)
+        return f"El proveedor con NIT {nitProv} ha sido actualizado"
 
-    def retrieveCliente(self):
-        pass
+    def retrieveCliente(self, id):
+        try:
+            colection = self.db.cliente
+            data = colection.find_one({"idCliente": id})
+            if data is None:
+                raise Exception(f"No existe un cliente con id {id}")
+            
+            return data, ""
+        except Exception as e:
+            return None, str(e)
 
-    def retrieveRestaurante(self):
-        pass
+    def retrieveRestaurante(self, nit):
+        try:
+            colection = self.db.restaurante
+            data = colection.find_one({"nitRestaurante": nit})
+            if data is None:
+                raise Exception(f"No existe un restaurante con nit {nit}")
+            
+            return data, ""
+        except Exception as e:
+            return None, str(e)
 
-    def retrieveFactura(self):
-        pass
+    def retrieveFactura(self, idFactura):
+        try:
+            factura = self.db.factura
+            detalleFactura = self.db.detallefactura
+            objId = ObjectId(idFactura)
+            infoFactura = factura.find_one({"_id": objId})
+            if infoFactura is None:
+                raise Exception(f"No existe una factura con id {idFactura}")
+            
+            detallesFactura = detalleFactura.find({"factura_idFactura": idFactura})
+            i = 1
+            for detalle in detallesFactura:
+                for key in detalle:
+                    value = detalle[key]
+                    infoFactura[key+f" Producto {i}:"] = value
+                i+=1
+            return infoFactura, ""
+        except Exception as e:
+            return None, str(e)
     
-    def retrieveInventario(self):
-        pass
+    def retrieveInventario(self, nit, codProd):
+        try:
+            colection = self.db.inventario
+            data = colection.find_one({"$and": [{'restaurante_nitRestaurante': nit}, {'producto_codigoProducto': codProd}]})
+            if data is None:
+                raise Exception(f"No existe un cliente con id {id}")
+            
+            return data, ""
+        except Exception as e:
+            return None, str(e)
 
-    def retrieveProducto(self):
-        pass
+    def retrieveProducto(self, codProd):
+        try:
+            colection = self.db.producto
+            objId = ObjectId(codProd)
+            data = colection.find_one({"_id": objId})
+            if data is None:
+                raise Exception(f"No existe un cliente con id {id}")
+            
+            return data, ""
+        except Exception as e:
+            return None, str(e)
 
-    def retrieveProveedor(self):
-        pass
+    def retrieveProveedor(self, nit):
+        try:
+            colection = self.db.proveedor
+            data     = colection.delete_one({"nitProveedor": nit})
+            if data is None:
+                raise Exception(f"No existe un cliente con id {id}")
+            
+            return data, ""
+        except Exception as e:
+            return None, str(e)
 
     def deleteCliente(self, id):
         try:
@@ -262,9 +315,9 @@ class NoSQL():
             if num == 0:
                 raise Exception(f"No existe un cliente con id {id}")
             
-            return True, "Se ha eliminado exitosamente"
+            return "Se ha eliminado exitosamente"
         except Exception as e:
-            return False, str(e)
+            return str(e)
 
     def deleteRestaurante(self, nit):
         try:
@@ -273,9 +326,9 @@ class NoSQL():
             if num == 0:
                 raise Exception(f"No existe un restaurante con nit {nit}")
             
-            return True, "Se ha eliminado exitosamente"
+            return "Se ha eliminado exitosamente"
         except Exception as e:
-            return False, str(e)
+            return str(e)
 
     def deleteInventario(self, nit, codProd):
         try:
@@ -284,9 +337,9 @@ class NoSQL():
             if num == 0:
                 raise Exception(f"No existe un ningún inventario con los datos proveeidos")
             
-            return True, "Se ha eliminado exitosamente"
+            return "Se ha eliminado exitosamente"
         except Exception as e:
-            return False, str(e)
+            return str(e)
 
     def deleteProducto(self, codProd):
         try:
@@ -296,9 +349,9 @@ class NoSQL():
             if num == 0:
                 raise Exception(f"No existe un cliente con id {id}")
             
-            return True, "Se ha eliminado exitosamente"
+            return "Se ha eliminado exitosamente"
         except Exception as e:
-            return False, str(e)
+            return str(e)
 
     def deleteProveedor(self, nit):
         try:
@@ -307,6 +360,6 @@ class NoSQL():
             if num == 0:
                 raise Exception(f"No existe un proveedor con nit {nit}")
             
-            return True, "Se ha eliminado exitosamente"
+            return "Se ha eliminado exitosamente"
         except Exception as e:
-            return False, str(e)
+            return str(e)
