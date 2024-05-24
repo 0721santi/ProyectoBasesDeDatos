@@ -7,14 +7,9 @@
     height: 100vh;
 }
 
-.upperDiv{
-    width: 100%;
-    height: auto;
-}
-
-.infoRellenar{
+.retrievedData{
     width: 80%;
-    height: 900px;
+    height: 750px;
     margin-top: 30px;
     background-color: rgba(73, 80, 87, .8);
     color: white;
@@ -27,29 +22,26 @@
     margin: 50px auto;
     border-radius: 15px;
 }
-.selectedOpc{
+
+.table{
+    height: 80%;
     background-color: #ADB5BD;
     margin-left: 80px;
     margin-right: 80px;
     border-radius: 15px;
-    height: 80%;
-}
-.elemento{
-    margin-top: 15px;
-}
-.elemento label{
+    align-items: center;
     color: black;
 }
-.elemento input{
-    width: 25%; 
-    padding: 10px 0px;
-    color: black;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #fff;
-    margin-bottom: 30px;
+
+.table table{
+    width: 80%;
+    height: 30%;
+    text-align: center;
+    margin: 200px 10% 0px 10%;
+    background-color: #ADB5BD;
 }
-.elemento input[type="submit"]{
+
+.table input[type="submit"]{
     background-color: white;
     width: 105px;
     border: none;
@@ -57,9 +49,11 @@
     text-transform: uppercase;
     border-radius: 10px;
     cursor: pointer;
-    margin-top: 0px;
+    margin-top: 30px;
+    padding: 20px 5px
 }
 
-#back{
-    margin-top: -15px;
+.keyColumn{
+    font-style: oblique;
+    font-size: large;
 }

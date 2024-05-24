@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styles/retrieve.css" rel="stylesheet" type="text/css">
+    <title>Retrieve de datos</title>
+</head>
+<body class="bodyConfig">
+    <div class="retrievedData">
+        <h1>Colección {{coll}}</h1>
+        <div class="table">
+            <table border="1">
+                {% for key, value in data.items() %}
+                    <tr class="tableRow">
+                        <td class="keyColumn">{{ key }}</td>
+                        <td>{{ value }}</td>
+                    <td>
+                {% endfor %}
+            </table>
+            <form action='/'>
+                <input type="submit" value="Regresar"/>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

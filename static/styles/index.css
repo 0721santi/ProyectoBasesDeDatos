@@ -6,43 +6,30 @@
     justify-content: center;
     height: 100vh;
 }
-.info{
-    height: 100px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-.selectButtons{
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
-    background-color: rgba(0, 0, 0, .5);
-    border: none;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 30px;
-}
-button:active{
-    background-color: black;
-    color: white;
-}
-input[type="submit"]{
-    background-color: white;
-    width: 105px;
-    border: none;
+
+.form{
     text-align: center;
-    text-transform: uppercase;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 30px;
+    align-items: center;
 }
 
-.elemento input[type="submit"]{
+.form select{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form input{
+    width: 25%; 
+    padding: 10px 0px;
+    color: black;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 30px;
+}
+
+.form input[type="submit"]{
     background-color: white;
-    width: 105px;
+    width: 100px;
     border: none;
     text-align: center;
     text-transform: uppercase;
