@@ -31,7 +31,10 @@ def actionsCliente():
         else:
             msg = db.deleteCliente(id)
     elif opc == "Update":
-        msg = db.updateCliente(id, nombre, mail, telefono)
+        if id is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.updateCliente(id, nombre, mail, telefono)
     elif opc == "Retrieve":
         if id is not None:
             result, msg = db.retrieveCliente(id)
@@ -57,9 +60,15 @@ def actionsRestaurante():
     if opc == "Create":
         msg = db.createRestaurante(nit, nombre, apertura, cierre, ubicacion)
     elif opc == "Delete":
-        msg = db.deleteRestaurante(nit)
+        if nit is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.deleteRestaurante(nit)
     elif opc == "Update":
-        msg = db.updateRestaurante(nit, nombre, apertura, cierre, ubicacion)
+        if nit is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.updateRestaurante(nit, nombre, apertura, cierre, ubicacion)
     elif opc == "Retrieve":
         if nit is not None:
             result, msg = db.retrieveRestaurante(nit)
@@ -90,10 +99,12 @@ def actionsFactura():
         msg = "Una factura no se puede borrar ni actualizar una vez creada."
     elif opc == "Retrieve":
         db = NoSQL()
-        result, err = db.retrieveFactura(idFactura)
-        if result is not None:
-            return render_template("./db/retrieve.html", data=result)
-        msg = err
+        if idFactura is not None:
+            result, msg = db.retrieveFactura(idFactura)
+            if result is not None:
+                return render_template("./db/retrieve.html", data=result)
+        else:
+            msg = "Faltan datos"
     return render_template("index.html", msg=msg)
 
 @app.route('/detalleFactura', methods=["GET", "POST"])
@@ -138,12 +149,18 @@ def actionsInventario():
     if opc == "Create":
         msg =  db.createInventario(nitRest, codProd, cantidad)
     elif opc == "Delete":
-        msg = db.deleteInventario(nitRest, codProd)
+        if nitRest is None or codProd is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.deleteInventario(nitRest, codProd)
     elif opc == "Update":
-        msg = db.updateInventario(nitRest, codProd, cantidad)
+        if nitRest is None or codProd is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.updateInventario(nitRest, codProd, cantidad)
     elif opc == "Retrieve":
         if nitRest is not None and codProd is not None:
-            result = db.retrieveInventario(nitRest, codProd)
+            result, msg = db.retrieveInventario(nitRest, codProd)
             return render_template("./db/retrieve.html", data=result)
         msg = "Faltan datos"
 
@@ -154,7 +171,7 @@ def actionsInventario():
 @app.route("/producto", methods=["POST"])
 def actionsProducto():
     idProd = request.form['idProd']
-    nitProv = int(request.form['nitProv'])
+    nitProv = request.form['nitProv']
     nombre = request.form['nombre']
     precio = int(request.form['precio'])
     categoria = request.form['categoria']
@@ -164,14 +181,20 @@ def actionsProducto():
     msg = ""
 
     if opc == "Create":
-        msg = db.createProducto(nitProv, nombre, precio, categoria)
+        msg = db.createProducto(int(nitProv), nombre, precio, categoria)
     elif opc == "Delete":
-        msg = db.deleteProducto(idProd)
+        if idProd is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.deleteProducto(idProd)
     elif opc == "Update":
-        msg = db.updateProducto(idProd, nitProv, nombre, precio, categoria)
+        if idProd is None or nitProv is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.updateProducto(idProd, int(nitProv), nombre, precio, categoria)
     elif opc == "Retrieve":
         if idProd is not None:
-            result = db.retrieveProducto(idProd)
+            result, msg = db.retrieveProducto(idProd)
             return render_template("./db/retrieve.html", data=result)
         msg = "Faltan datos"
     
@@ -192,12 +215,18 @@ def actionsProveedor():
     if opc == "Create":
         msg = db.createProveedor(nitProv, ubicacion, telefono)
     elif opc == "Delete":
-        msg = db.deleteProveedor(nitProv)
+        if nitProv is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.deleteProveedor(nitProv)
     elif opc == "Update":
-        msg = db.updateProveedor(nitProv, ubicacion, telefono)
+        if nitProv is None:
+            msg = "Faltan datos."
+        else:
+            msg = db.updateProveedor(nitProv, ubicacion, telefono)
     elif opc == "Retrieve":
         if nitProv is not None:
-            result = db.retrieveProveedor(id)
+            result, msg = db.retrieveProveedor(nitProv)
             return render_template("./db/retrieve.html", data=result)
         msg = "Faltan datos"
     

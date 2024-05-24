@@ -75,7 +75,7 @@ class NoSQL():
 
                 doc = {"cliente_idCliente": int(id), "restaurante_nitRestaurante": int(nit), "detallePago": detallePago, "fechaYHora": fechaCompra, "totalProductos": int(totalProductos)}
 
-                idFactura = factura.insert_one(doc).inserted_id
+                idFactura = str(factura.insert_one(doc).inserted_id)
 
                 #Añadir detalle Factura
                 for info in productos:
@@ -93,7 +93,8 @@ class NoSQL():
     def createInventario(self, nitRest, codProd, cantidad):
         try:
             colection = self.db.inventario
-            producto = self.db.producto.find_one({"producto_codigoProducto": codProd})
+            objId = ObjectId(codProd)
+            producto = self.db.producto.find_one({"_id": objId})
             restaurante = self.db.restaurante.find_one({"nitRestaurante": nitRest})
             if producto is None:
                 raise Exception(f"No existe el producto {codProd}")
@@ -187,13 +188,13 @@ class NoSQL():
             change = {'$set': {'cantidadDisponible': cantidad}}
             try:
                 colection.update_one(filter=pk, update=change)
+                return "Se ha actualizado el inventario"
             except Exception as e:
                 return str(e)
 
     def updateProducto(self, idProd, nitProv, nombre, precio, categoria):
         colection = self.db.producto
         objID = ObjectId(idProd)
-        print(objID)
         pk = {"$and": [{'_id': objID}, {'proveedor_nitProveedor': nitProv}]}
         if precio > 0:
             change = {'$set': {'precio': precio}}
@@ -213,7 +214,7 @@ class NoSQL():
                 colection.update_one(filter=pk, update=change)
             except Exception as e:
                 return str(e)
-        return f"El producto {nombre} ha sido actualizado"
+        return f"El producto ha sido actualizado"
 
     def updateProveedor(self, nitProv, ubicacion, telefono):
         colection = self.db.proveedor
@@ -300,10 +301,9 @@ class NoSQL():
     def retrieveProveedor(self, nit):
         try:
             colection = self.db.proveedor
-            data     = colection.delete_one({"nitProveedor": nit})
+            data = colection.find_one({"nitProveedor": nit})
             if data is None:
                 raise Exception(f"No existe un cliente con id {id}")
-            
             return data, ""
         except Exception as e:
             return None, str(e)
