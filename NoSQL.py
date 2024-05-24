@@ -255,17 +255,58 @@ class NoSQL():
     def retrieveProveedor(self):
         pass
 
-    def deleteCliente(self):
-        pass
+    def deleteCliente(self, id):
+        try:
+            colection = self.db.cliente
+            num = colection.delete_one({"idCliente": id}).deleted_count
+            if num == 0:
+                raise Exception(f"No existe un cliente con id {id}")
+            
+            return True, "Se ha eliminado exitosamente"
+        except Exception as e:
+            return False, str(e)
 
-    def deleteRestaurante(self):
-        pass
+    def deleteRestaurante(self, nit):
+        try:
+            colection = self.db.restaurante
+            num = colection.delete_one({"nitRestaurante": nit}).deleted_count
+            if num == 0:
+                raise Exception(f"No existe un restaurante con nit {nit}")
+            
+            return True, "Se ha eliminado exitosamente"
+        except Exception as e:
+            return False, str(e)
 
-    def deleteInventario(self):
-        pass
+    def deleteInventario(self, nit, codProd):
+        try:
+            colection = self.db.inventario
+            num = colection.delete_one({"$and": [{'restaurante_nitRestaurante': nit}, {'producto_codigoProducto': codProd}]}).deleted_count
+            if num == 0:
+                raise Exception(f"No existe un ningún inventario con los datos proveeidos")
+            
+            return True, "Se ha eliminado exitosamente"
+        except Exception as e:
+            return False, str(e)
 
-    def deleteProducto(self):
-        pass
+    def deleteProducto(self, codProd):
+        try:
+            colection = self.db.producto
+            objId = ObjectId(codProd)
+            num = colection.delete_one({"_id": objId}).deleted_count
+            if num == 0:
+                raise Exception(f"No existe un cliente con id {id}")
+            
+            return True, "Se ha eliminado exitosamente"
+        except Exception as e:
+            return False, str(e)
 
-    def deleteProveedor(self):
-        pass
+    def deleteProveedor(self, nit):
+        try:
+            colection = self.db.proveedor
+            num = colection.delete_one({"nitProveedor": nit}).deleted_count
+            if num == 0:
+                raise Exception(f"No existe un proveedor con nit {nit}")
+            
+            return True, "Se ha eliminado exitosamente"
+        except Exception as e:
+            return False, str(e)
