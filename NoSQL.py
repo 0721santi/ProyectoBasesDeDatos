@@ -38,8 +38,55 @@ class NoSQL():
             print(e)
             return False
 
-    def createFactura(self):
-        pass
+    def createFactura(self, productos, id, nit, medioPago, fechaCompra, totalProductos):
+        with self.client.start_session() as transaccion:
+            try:
+                transaccion.start_transaction()
+                factura = self.db.factura
+                detalleFactura = self.db.detallefactura
+                collProducto = self.db.producto
+                #Revisa que si existen cliente y restaurante
+                cliente = self.db.cliente.find_one({"idCliente": int(id)})
+                restaurante = self.db.restaurante.find_one({"nitRestaurante": int(nit)})
+    
+                if cliente is None:
+                    raise Exception("No existe ese cliente")
+                if restaurante is None:
+                    raise Exception("No existe ese restaurante")
+    
+                #Inicia transacción
+                valorTotal = 0
+                for info in productos:
+                    producto = info[0]
+                    cantidad = int(info[1])
+                    pk = {"$and": [{'producto_codigoProducto': producto}, {'restaurante_nitRestaurante': int(nit)}]}
+                    disponible = self.db.inventario.find_one(pk)['cantidadDisponible']
+                    if int(cantidad) > disponible:
+                        raise Exception(f"No hay suficientes productos de {producto}")
+                    else:
+                        objId = ObjectId(producto)
+                        valorTotal += collProducto.find_one({'_id': objId})['precio']
+                        self.updateInventario(nit, producto, (disponible-cantidad))
+
+                #Añadir factura
+                detallePago = {"totalValor": valorTotal, "medioDePago": medioPago}
+
+                doc = {"cliente_idCliente": int(id), "restaurante_nitRestaurante": int(nit), "detallePago": detallePago, "fechaYHora": fechaCompra, "totalProductos": int(totalProductos)}
+
+                idFactura = factura.insert_one(doc).inserted_id
+
+                #Añandir detalle Factura
+                for info in productos:
+                    producto = info[0]
+                    cantidad = info[1]
+                    doc = {"factura_idFactura": idFactura, "inventario_producto_codigoProducto": producto, "cantidadComprada": int(cantidad), "inventario_restaurante_nitRestaurante": int(nit)}
+                    detalleFactura.insert_one(doc)
+                
+                transaccion.commit_transaction()
+                return True, "Se ha agregado la factura"
+            except Exception as e :
+                transaccion.abort_transaction()
+                return False, str(e)
 
     def createInventario(self, nitRest, codProd, cantidad):
         colection = self.db.inventario
@@ -143,7 +190,7 @@ class NoSQL():
         colection = self.db.producto
         objID = ObjectId(idProd)
         print(objID)
-        pk = {"$and": [{'_id': objID}, {'proveedor_nitProveedor': nitProv}]}        
+        pk = {"$and": [{'_id': objID}, {'proveedor_nitProveedor': nitProv}]}
         if precio > 0:
             change = {'$set': {'precio': precio}}
             try:
