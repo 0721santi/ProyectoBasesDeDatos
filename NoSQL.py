@@ -89,14 +89,20 @@ class NoSQL():
                 return False, str(e)
 
     def createInventario(self, nitRest, codProd, cantidad):
-        colection = self.db.inventario
-        doc = {"restaurante_nitRestaurante": nitRest, "producto_codigoProducto": codProd, "cantidadDisponible": cantidad}
         try:
+            colection = self.db.inventario
+            producto = self.db.producto.find_one({"producto_codigoProducto": codProd})
+            restaurante = self.db.restaurante.find_one({"nitRestaurante": nitRest})
+            if producto is None:
+                raise Exception(f"No existe el producto {codProd}")
+            if restaurante is None:
+                raise Exception(f"No existe el restaurante {nitRest}")
+            doc = {"restaurante_nitRestaurante": nitRest, "producto_codigoProducto": codProd, "cantidadDisponible":     cantidad}
+
             colection.insert_one(doc)
-            return True
+            return True, "Se ha agregado el inventario"
         except Exception as e:
-            print(e)
-            return False
+            return False, str(e)
 
     def createProducto(self, nitProv, nombre, precio, categoria):
         colection = self.db.producto
