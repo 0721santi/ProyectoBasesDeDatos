@@ -101,29 +101,49 @@ def actionsFactura():
     fechaCompra = request.form['FyH']
     opc = request.form['opc']
     currProd = "1"
-    
-    #condicional
-    #A una factura no se le puede hacer ni update ni delete.
-    idFactura = 0 #debe de ir el valor retornado por la función al agregar.
+    productos = []
 
-    return render_template("./db/detalleFactura.html", idFactura=idFactura, nit=nit, id=id, prods=prods, medioPago=medioPago, fechaCompra=fechaCompra, currProd=currProd)
+    if opc == "Create":
+        return render_template("./db/detalleFactura.html", nit=nit, id=id, prods=prods, medioPago=medioPago, fechaCompra=fechaCompra, currProd=currProd, productos=productos)
+    elif opc == "Delete " or opc == "Update":
+        msg = "Una factura no se puede borrar ni actualizar una vez creada."
+    elif opc == "Retrieve":
+        db = NoSQL()
+        msg = ""
 
 @app.route('/detalleFactura', methods=["GET", "POST"])
 def detalleFactura():
     if request.method == "POST":
         prod = request.form['prod']
         cantidad = request.form['cantidad']
-        detalle = {prod:cantidad}
-        print(f'detalle {detalle} nit {request.form["nit"]} id {request.form["id"]}')
-        # Llamar función para añadir a detalleFactura.
         currProd = int(request.form['currProd']) + 1
+        productos = []
+        val = request.form.getlist("productosArr")
+        if len(val) > 0:
+            i = 0
+            while i < len(val):
+                newArr = [val[i], val[i+1]]
+                productos.append(newArr)
+                i+=2     
+        amount = [prod, cantidad]
+        productos.append(amount)
 
     prods = int(request.form['prods'])
-
+    id = request.form['id']
+    nit = request.form['nit']
+    fechaCompra = request.form['fechaCompra']
+    medioPago = request.form['medioPago']
     if currProd > prods:
+        
+        db = NoSQL()
+        ans, msg = db.createFactura(productos, id, nit, medioPago, fechaCompra, prods)
+        print("msg: "+msg)
+        db.closeConn()
+        if ans:
+            pass
         return render_template("index.html")
 
-    return render_template('./db/detalleFactura.html', nit=request.form['nit'], id=request.form['id'], prods=prods,medioPago=request.form['medioPago'], fechaCompra=request.form['fechaCompra'], currProd=currProd)
+    return render_template('./db/detalleFactura.html', nit=nit, id=id, prods=prods,medioPago=medioPago, fechaCompra=fechaCompra, currProd=currProd, productos=productos)
 
 @app.route("/inventario", methods=["POST"])
 def actionsInventario():
